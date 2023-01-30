@@ -1,15 +1,15 @@
 {
     "初始化t个测试用户的cpp模板": {
-		"prefix": "cpp",
-		"body": [
+        "prefix": "cpp",
+        "body": [
             "/**",
             " * @File    :   $TM_FILENAME",
             " * @Time    :   $CURRENT_YEAR/$CURRENT_MONTH/$CURRENT_DATE $CURRENT_HOUR:$CURRENT_MINUTE:$CURRENT_SECOND",
             " * @Author  :   Jvaeyhcd",
             " * @Contact :   huangcd1992@gmail.com",
             "**/",
-			"#include <bits/stdc++.h>",
-			"using namespace std;",
+            "#include <bits/stdc++.h>",
+            "using namespace std;",
             "",
             "#define fio ios_base::sync_with_stdio(false); cin.tie(NULL);",
             "",
@@ -27,20 +27,20 @@
             "",
             "    return 0;",
             "}"
-		],
-		"description": "A cpp file template with t test cases."
-	},
+        ],
+        "description": "A cpp file template with t test cases."
+    },
     "初始化cpp模板": {
         "prefix": "cpp",
-		"body": [
+        "body": [
             "/**",
             " * @File    :   $TM_FILENAME",
             " * @Time    :   $CURRENT_YEAR/$CURRENT_MONTH/$CURRENT_DATE $CURRENT_HOUR:$CURRENT_MINUTE:$CURRENT_SECOND",
             " * @Author  :   Jvaeyhcd",
             " * @Contact :   huangcd1992@gmail.com",
             "**/",
-			"#include <bits/stdc++.h>",
-			"using namespace std;",
+            "#include <bits/stdc++.h>",
+            "using namespace std;",
             "",
             "#define fio ios_base::sync_with_stdio(false); cin.tie(NULL);",
             "",
@@ -53,16 +53,16 @@
             "    solve();",
             "    return 0;",
             "}"
-		],
-		"description": "A cpp file template."
+        ],
+        "description": "A cpp file template."
     },
     "INCLUDE": {
         "prefix": "include",
-		"body": [
-			"#include <bits/stdc++.h>",
-			"using namespace std;"
-		],
-		"description": "base include"
+        "body": [
+            "#include <bits/stdc++.h>",
+            "using namespace std;"
+        ],
+        "description": "base include"
     },
     "prefix function": {
         "prefix": "sprefix",
