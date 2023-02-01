@@ -2,28 +2,42 @@
 using namespace std;
 
 template<typename T>
-class fenwick {
+class Fenwick {
 private:
-    vector<T> fenw;
+    vector<T> fenw, fenw2;
     int n;
 public:
-    explicit fenwick(int _n) : n(_n), fenw(_n + 1) {};
+    explicit Fenwick(int _n) : n(_n), fenw(_n + 1), fenw2(_n + 1) {};
 
     int lowbit(int x) {
         return x & (-x);
     }
 
     void add(int x, T v) {
-        for (int i = x; i <= n; i += lowbit(i)) {
-            fenw[i] += v;
+        int pos = x;
+        while (x <= n) {
+            fenw[x] += v;
+            fenw2[x] += v * pos;
+            x += lowbit(x);
         }
+    }
+
+    void range_add(int l, int r, T v) {
+        add(l, v);
+        add(r + 1, -v);
     }
 
     T get(int x) {
         T v{};
-        for (int i = x - 1; i > 0; i -= lowbit(i)) {
-            v += fenw[i];
+        int pos = x;
+        while (x) {
+            v += (fenw[x] * (pos + 1) - fenw2[x]);
+            x -= lowbit(x);
         }
         return v;
+    }
+
+    T range_query(int l, int r) {
+        return get(r) - get(l - 1);
     }
 };
