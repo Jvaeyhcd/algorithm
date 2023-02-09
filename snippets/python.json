@@ -1,5 +1,5 @@
 {
-    "HEADER":{
+    "HEADER": {
         "prefix": "head",
         "body": [
             "#!/usr/bin/env python",
@@ -9,7 +9,6 @@
             "@Time    :   $CURRENT_YEAR/$CURRENT_MONTH/$CURRENT_DATE $CURRENT_HOUR:$CURRENT_MINUTE:$CURRENT_SECOND",
             "@Author  :   Jvaeyhcd",
             "@Contact :   huangcd1992@gmail.com",
-            
             "'''",
             "",
             "# here put the import lib",
@@ -263,7 +262,7 @@
             "    def _push_up(self, root: SegTreeNode):",
             "        root.val = root.left.val + root.right.val",
             "",
-            "",  
+            "",
             "    def _update(self, L: int, R: int, val: int, root: SegTreeNode):",
             "        start, end = root.l, root.r",
             "        if L <= start and end <= R:",
@@ -279,7 +278,7 @@
             "            self._update(L, R, val, root.right)",
             "        self._push_up(root)",
             "",
-            "",  
+            "",
             "    def _query(self, L: int, R: int, root: SegTreeNode) -> int:",
             "        start, end = root.l, root.r",
             "        if L > end or R < start:",
@@ -315,5 +314,50 @@
             "    return pi"
         ],
         "description": "string's prefix function"
+    },
+    "Trie": {
+        "prefix": "trie",
+        "body": [
+            "class TrieNode:",
+            "    def __init__(self):",
+            "        # 是否构成一个完成的单词",
+            "        self.is_word = False",
+            "        # 子节点",
+            "        self.children = {}",
+            "",
+            "",
+            "class Trie:",
+            "    def __init__(self):",
+            "        self.root = TrieNode()",
+            "",
+            "    # 加入到树中",
+            "    def insert(self, word):",
+            "        node = self.root",
+            "        for c in word:",
+            "            child = node.children.get(c)",
+            "            if not child:",
+            "                node.children[c] = TrieNode()",
+            "            node = node.children[c]",
+            "        node.is_word = True",
+            "",
+            "    # 查找单词",
+            "    def search(self, word):",
+            "        node = self.root",
+            "        for c in word:",
+            "            node = node.children.get(c)",
+            "            if not node:",
+            "                return False",
+            "        return node.is_word",
+            "",
+            "    # 是否是前缀开头",
+            "    def start_with(self, prefix):",
+            "        node = self.root",
+            "        for c in prefix:",
+            "            node = node.children.get(c)",
+            "            if not node:",
+            "                return False",
+            "        return True"
+        ],
+        "description": "Trie"
     }
 }
