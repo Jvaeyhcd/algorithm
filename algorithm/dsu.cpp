@@ -33,3 +33,11 @@ public:
         return true;
     }
 };
+
+int main(int argc, char const *argv[])
+{
+    UnionFindSet dsu = UnionFindSet(10);
+    dsu.merge(1, 2);
+    cout << dsu.find(2) << endl;
+    return 0;
+}
