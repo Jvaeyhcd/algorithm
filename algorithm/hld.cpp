@@ -1,0 +1,101 @@
+/**
+ * @File    :   hld.cpp
+ * @Time    :   2023/03/20 14:56:32
+ * @Author  :   Jvaeyhcd
+ * @Contact :   huangcd1992@gmail.com
+**/
+#include <bits/stdc++.h>
+using namespace std;
+
+#define fio ios_base::sync_with_stdio(false); cin.tie(NULL);
+
+struct HLD {
+    int n, cnt;
+    vector<int> sz, dep, fa, son, top;
+    vector<vector<int>> adj;
+
+    HLD(){}
+    HLD(int _n) {
+        init(_n);
+    }
+    
+    void init(int _n) {
+        n = _n;
+        cnt = 1;
+        sz.resize(n, 0);
+        dep.resize(n, 0);
+        fa.resize(n, 0);
+        son.resize(n, 0);
+        top.resize(n, 0);
+        adj.assign(n, {});
+    }
+    
+    void add(int u, int v) {
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+
+    void dfs1(int u, int f) {
+        dep[u] = dep[f] + 1;
+        sz[u] = 1;
+        fa[u] = f;
+        for (int v: adj[u]) {
+            if (v == f) {
+                continue;
+            }
+            dfs1(v, u);
+            if (!son[u] || sz[v] > sz[son[u]]) {
+                son[u] = v;
+            }
+            sz[u] += sz[v];
+        }
+    }
+    
+    void dfs2(int u, int t) {
+        top[u] = t;
+        if (!son[u])
+            return;
+        dfs2(son[u], t);
+        for (int v: adj[u]) {
+            if (v == fa[u] || v == son[u]) {
+                continue;
+            }
+            dfs2(v, v);
+        }
+    }
+    
+    int lca(int x, int y) {
+        while (top[x] != top[y]) {
+            if (dep[top[x]] < dep[top[y]]) {
+                swap(x, y);
+            }
+            x = fa[top[x]];
+        }
+        return dep[x] < dep[y] ? x : y;
+    }
+};
+
+void solve() {
+    int n, m, s;
+    cin >> n >> m >> s;
+    HLD hld(n + 1);
+    hld.init(n + 1);
+    int x, y;
+    for (int i = 0; i < n - 1; i++) {
+        cin >> x >> y;
+        hld.add(x, y);
+    }
+    hld.dfs1(s, 0);
+    hld.dfs2(s, s);
+    for (int i = 0; i < m; i++) {
+        cin >> x >> y;
+        cout << hld.lca(x, y) << endl;
+    }
+}
+
+int main() {
+    freopen("input.txt", "r", stdin);
+    fio;
+    solve();
+    return 0;
+}
