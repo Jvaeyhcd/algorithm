@@ -2,21 +2,20 @@
 using namespace std;
 
 template<typename T>
-class BIT {
-private:
-    vector<T> t;
+struct BIT {
+    vector<T> t1, t2;
     int n;
-public:
-    explicit BIT(int _n) : n(_n), t(_n + 1) {};
+
+    BIT(int _n) : n(_n), t1(_n + 1), t2(_n + 1) {};
 
     int lowbit(int x) {
         return x & (-x);
     }
 
     void add(int x, T v) {
-        while (x <= n) {
-            t[x] += v;
-            x += lowbit(x);
+        for (int i = x; i <= n; i += lowbit(i)) {
+            t1[i] += v;
+            t2[i] += x * v;
         }
     }
 
@@ -25,14 +24,21 @@ public:
         add(r + 1, -v);
     }
 
-    T get(int x) {
+    T ask(int x) {
         T v{};
-
-        while (x) {
-            v += t[x];
-            x -= lowbit(x);
+        for (int i = x; i; i -= lowbit(i)) {
+            v += (x + 1) * t1[i] - t2[i];
         }
-
         return v;
     }
+
+    T range_ask(int l, int r) {
+        return ask(r) - ask(l - 1);
+    }
 };
+
+int main(int argc, char const *argv[])
+{
+    BIT<int> bit(10);
+    return 0;
+}

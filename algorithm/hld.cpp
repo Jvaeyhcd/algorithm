@@ -10,8 +10,9 @@ using namespace std;
 #define fio ios_base::sync_with_stdio(false); cin.tie(NULL);
 
 struct HLD {
-    int n, cnt;
-    vector<int> sz, dep, fa, son, top;
+    int n, tot;
+    vector<int> sz, dep, fa, son;
+    vector<int> top, dfn, rnk;
     vector<vector<int>> adj;
 
     HLD(){}
@@ -21,13 +22,22 @@ struct HLD {
     
     void init(int _n) {
         n = _n;
-        cnt = 1;
+        tot = 1;
         sz.resize(n, 0);
         dep.resize(n, 0);
         fa.resize(n, 0);
         son.resize(n, 0);
         top.resize(n, 0);
+        dfn.resize(n, 0);
+        rnk.resize(n, 0);
         adj.assign(n, {});
+    }
+
+    void work(int root = 1) {
+        top[root] = root;
+        dep[root] = 0;
+        dfs1(root, 0);
+        dfs2(root, root);
     }
     
     void add(int u, int v) {
@@ -44,23 +54,26 @@ struct HLD {
                 continue;
             }
             dfs1(v, u);
+            sz[u] += sz[v];
             if (!son[u] || sz[v] > sz[son[u]]) {
                 son[u] = v;
             }
-            sz[u] += sz[v];
         }
     }
     
     void dfs2(int u, int t) {
         top[u] = t;
-        if (!son[u])
+        tot++;
+        dfn[u] = tot;
+        rnk[tot] = u;
+        if (!son[u]) {
             return;
+        }
         dfs2(son[u], t);
         for (int v: adj[u]) {
-            if (v == fa[u] || v == son[u]) {
-                continue;
+            if (v != fa[u] && v != son[u]) {
+                dfs2(v, v);
             }
-            dfs2(v, v);
         }
     }
     
@@ -73,20 +86,24 @@ struct HLD {
         }
         return dep[x] < dep[y] ? x : y;
     }
+
+    int dist(int u, int v) {
+        return dep[u] + dep[v] - 2 * dep[lca(u, v)];
+    }
 };
+
+HLD hld;
 
 void solve() {
     int n, m, s;
     cin >> n >> m >> s;
-    HLD hld(n + 1);
     hld.init(n + 1);
     int x, y;
     for (int i = 0; i < n - 1; i++) {
         cin >> x >> y;
         hld.add(x, y);
     }
-    hld.dfs1(s, 0);
-    hld.dfs2(s, s);
+    hld.work(s);
     for (int i = 0; i < m; i++) {
         cin >> x >> y;
         cout << hld.lca(x, y) << endl;

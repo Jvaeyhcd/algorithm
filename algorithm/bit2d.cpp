@@ -2,10 +2,15 @@
 using namespace std;
 
 template<typename T>
-class BIT2d {
+struct BIT2d {
+    int n, m;
+    vector<vector<T>> c1, c2, c3, c4;
 
-public:
-    explicit BIT2d(int _n, int _m) : n(_n), m(_m), c1(_n + 1, vector<T>(_m + 1)), c2(_n + 1, vector<T>(_m + 1)), c3(_n + 1, vector<T>(_m + 1)), c4(_n + 1, vector<T>(_m + 1)) {};
+    int lowbit(int x) {
+        return x & (-x);
+    }
+
+    BIT2d(int _n, int _m) : n(_n), m(_m), c1(_n + 1, vector<T>(_m + 1)), c2(_n + 1, vector<T>(_m + 1)), c3(_n + 1, vector<T>(_m + 1)), c4(_n + 1, vector<T>(_m + 1)) {};
 
     void add(int x, int y, T v) {
         for (int i = x; i <= n; i += lowbit(i)) {
@@ -39,13 +44,6 @@ public:
         return ask(x2, y2) + ask(x1 - 1, y1 - 1) - ask(x2, y1 - 1) - ask(x1 - 1, y2);
     }
 
-private:
-    int n, m;
-    vector<vector<T>> c1, c2, c3, c4;
-
-    int lowbit(int x) {
-        return x & (-x);
-    }
 };
 
 int main(int argc, char const *argv[])

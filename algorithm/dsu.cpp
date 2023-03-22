@@ -1,12 +1,11 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class UnionFindSet {
+struct UnionFindSet {
     vector<int> fa;
     vector<int> rank;
     int n;
 
-public:
     UnionFindSet(int _n) {
         n = _n;
         fa.resize(n);
@@ -38,6 +37,7 @@ int main(int argc, char const *argv[])
 {
     UnionFindSet dsu = UnionFindSet(10);
     dsu.merge(1, 2);
-    cout << dsu.find(2) << endl;
+    dsu.merge(2, 3);
+    cout << dsu.find(3) << endl;
     return 0;
 }
