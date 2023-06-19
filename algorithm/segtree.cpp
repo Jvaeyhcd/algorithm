@@ -5,16 +5,17 @@ using namespace std;
 
 const int MAXN = 1e9;
 
-struct SegTreeNode {
-    SegTreeNode *left, *right;
-    int val, lazy;
-    int l, r;
-    SegTreeNode() : val(0), lazy(0), left(nullptr), right(nullptr) {}
-    SegTreeNode(int _l, int _r) : l(_l), r(_r), val(0), lazy(0), left(nullptr), right(nullptr) {}
-};
-
 template<typename T>
 struct SegTree {
+
+    struct SegTreeNode {
+        SegTreeNode *left, *right;
+        int val, lazy;
+        int l, r;
+        SegTreeNode() : val(0), lazy(0), left(nullptr), right(nullptr) {}
+        SegTreeNode(int _l, int _r) : l(_l), r(_r), val(0), lazy(0), left(nullptr), right(nullptr) {}
+    };
+
     SegTreeNode *root;
 
     SegTree() {

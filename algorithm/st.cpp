@@ -32,7 +32,7 @@ struct SparseTable {
 };
 
 static int op(const int &t1, const int &t2) {
-    return t1 + t2;
+    return min(t1, t2);
 };
 
 int main(int argc, char const *argv[])
